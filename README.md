@@ -1,2 +1,0 @@
-# bloggioback
-backend bloggio app

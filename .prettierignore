@@ -1,0 +1,15 @@
+dist/
+build/
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+.git/**
+.history/**
+.sass-cache/**
+.vscode/**
+download/**
+node_modules/**
+*.min.js
+*.min.js.map
+*.js.map
