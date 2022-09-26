@@ -1,17 +1,20 @@
-import express from 'express';
-// se puso el @ para configurarlo como ruta absoluta
-import indexRoute from '@routes/index.route';
+import 'reflect-metadata';
 
-// function dff(params) {}
+import app from './app';
+import { AppDataSource } from './db/db';
 
-const app = express();
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+async function main () {
+  try {
+    await AppDataSource.initialize();
+    console.log('Database connected');
+    app.listen(3000);
+    console.log('server is listening on port ', 3000);
+  } catch (e) {
+    console.log('error ', e);
+  }
+}
 
-app.get('/', (req, res) => {
-  res.json('CALLA CHIPIIIIIIIIIIIII');
-});
-
-app.use('/', indexRoute);
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+main().catch(function (e) {
+  console.log('Error -> ', e);
 });

@@ -18,20 +18,28 @@
   },
   "rules": {
     "prettier/prettier": "error",
-    "no-empty-function": "warn",
+    "no-empty-function": "off",
     "no-unused-vars": "error",
-    "no-useless-constructor": "error",
+    "no-useless-constructor": "off",
     "no-var": "error",
     "prefer-const": "error",
     "prefer-template": "error",
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": ["error", "always"],
     "space-in-parens": ["error", "never"],
     "space-infix-ops": "error",
     "spaced-comment": ["error", "always"],
-    "import/no-duplicates": "error"
-    // "@typescript-eslint/no-unused-vars": "error",
+    "import/no-duplicates": "error",
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "default",
+        "format": ["camelCase", "snake_case", "PascalCase"]
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-misused-promises": "error"
     // "@typescript-eslint/no-unused-expressions": "error",
     // "@typescript-eslint/no-use-before-define": "error",
     // "@typescript-eslint/no-useless-constructor": "error",
@@ -40,4 +48,3 @@
     // "@typescript-eslint/no-explicit-any": "off"
   }
 }
-

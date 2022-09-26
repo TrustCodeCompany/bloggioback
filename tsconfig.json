@@ -5,7 +5,7 @@
     "baseUrl": ".",
     //paths es para configurar las rutas absolutas
     "paths": {
-      "@routes/*": ["./src/routes/*"],
+      "@routes/*": ["src/user/routes/*"],
       "@controllers/*": ["./src/controllers/*"],
       "@models/*": ["./src/models/*"],
       "@middlewares/*": ["./src/middlewares/*"],
@@ -20,11 +20,18 @@
     "esModuleInterop": true,
     "strictNullChecks": true,
     // habilitar esto si queremos que las funciones por ejemplo regresen null
-    // "strict": true,
+    //"strict": true,
     "checkJs": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,   
+    "experimentalDecorators": true, 
+    "emitDecoratorMetadata": true,
+    /*"noUnusedLocals": true,  
+    "noUnusedParameters": true, 
+    "noImplicitReturns": true,   
+    "noFallthroughCasesInSwitch": true,  */
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

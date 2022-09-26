@@ -24,7 +24,8 @@ module.exports = {
           '@middlewares': './src/middlewares'
         }
       }
-    ]
+    ],
+    ['@babel/plugin-proposal-decorators', { legacy: true }] // add decorator
   ]
   // ignore: ['**/*.spec.ts']
 };
