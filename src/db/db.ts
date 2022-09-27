@@ -1,3 +1,6 @@
+import { Category } from 'src/user/entities/category.entity';
+import { Comment } from 'src/user/entities/comment.entity';
+import { Post } from 'src/user/entities/post.entity';
 import { DataSource } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 
@@ -10,7 +13,7 @@ export const AppDataSource = new DataSource({
   database: 'bloggio',
   synchronize: true,
   logging: true,
-  entities: [User],
+  entities: [User, Post, Comment, Category],
   subscribers: [],
   migrations: []
 });
