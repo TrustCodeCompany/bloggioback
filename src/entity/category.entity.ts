@@ -4,8 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  BaseEntity
+  BaseEntity,
+  OneToMany
 } from 'typeorm';
+import { Post } from './post.entity';
 
 @Entity()
 export class Category extends BaseEntity {
@@ -15,7 +17,7 @@ export class Category extends BaseEntity {
   @Column()
   category_description: string;
 
-  @Column({ type: 'number', default: 1 })
+  @Column({ type: 'int', default: 1 })
   category_state: number;
 
   @CreateDateColumn()
@@ -23,4 +25,7 @@ export class Category extends BaseEntity {
 
   @UpdateDateColumn()
   category_timestamp_update: Date;
+
+  @OneToMany(() => Post, (post) => post.category)
+  posts: Post[];
 }

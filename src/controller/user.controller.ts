@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../entities/user.entity';
+import { User } from '../entity/user.entity';
 import { UserRepository } from '../repository/user.repository';
 
 export const createUser = async (

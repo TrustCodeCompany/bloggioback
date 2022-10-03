@@ -1,4 +1,4 @@
-import { User } from '../entities/user.entity';
+import { User } from '../entity/user.entity';
 
 export class UserRepository {
   public insert = async (user: User): Promise<number> => {

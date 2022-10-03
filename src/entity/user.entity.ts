@@ -4,8 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  BaseEntity
+  BaseEntity,
+  OneToMany
 } from 'typeorm';
+import { Post } from './post.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -32,4 +34,7 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn()
   user_timestamp_update: Date;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }

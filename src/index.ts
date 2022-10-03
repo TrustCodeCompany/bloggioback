@@ -3,8 +3,8 @@ import 'reflect-metadata';
 import app from './app';
 import { AppDataSource } from './db/db';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-async function main () {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, space-before-function-paren
+async function main() {
   try {
     await AppDataSource.initialize();
     console.log('Database connected');
