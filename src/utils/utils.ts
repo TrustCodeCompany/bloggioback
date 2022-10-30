@@ -7,7 +7,7 @@ const isString = (string: string): boolean => {
 
 const parseContent = (contentFromRequest: any): string => {
   if (!isString(contentFromRequest)) {
-    throw new Error('the property content is incorrect, should be string');
+    throw new Error('the property post_content is incorrect, should be string');
   }
   return contentFromRequest;
 };

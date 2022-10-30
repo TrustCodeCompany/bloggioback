@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import toNewPostEntry from 'src/utils/utils';
 import { PostRepository } from '../repository/post.repository';
 
 const postRepository = new PostRepository();
@@ -8,7 +9,9 @@ export const createPost = async (
   res: Response
 ): Promise<void> => {
   try {
-    postRepository
+    toNewPostEntry(req.body);
+
+    /* postRepository
       .save(req.body)
       .then((post) => {
         if (post instanceof Error) {
@@ -19,11 +22,13 @@ export const createPost = async (
         }
         res.send('ok');
       })
-      .catch((err: string) => res.status(500).send(`Error: ${err}`));
+      .catch((err: string) => res.status(500).send(`Error: ${err}`));*/
   } catch (error) {
-    if (error instanceof Error) {
+    console.log('Error ->> ', error);
+    res.status(500).json(JSON.parse(`{"error":"${error.message}"}`));
+    /* if (error instanceof Error) {
       res.send({ message: error.message }).status(500);
-    }
+    }*/
   }
 };
 
