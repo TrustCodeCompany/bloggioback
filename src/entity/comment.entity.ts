@@ -5,13 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  // JoinColumn,
-  // OneToOne,
-  OneToMany
+  ManyToOne
 } from 'typeorm';
-import { Post } from './post.entity';
-// import { User } from './user.entity';
-
+import { CommentPost } from './commentpost.entity';
 @Entity()
 export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -35,10 +31,6 @@ export class Comment extends BaseEntity {
   @UpdateDateColumn()
   comment_timestamp_update: Date;
 
-  // @OneToOne(() => User)
-  // @JoinColumn()
-  // user_id: User;
-
-  @OneToMany(() => Post, (post) => post.comment)
-  posts: Post[];
+  @ManyToOne(() => CommentPost, (commentPost) => commentPost.comment)
+  commentPost: CommentPost;
 }

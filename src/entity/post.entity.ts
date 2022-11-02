@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   BaseEntity,
   ManyToOne
+  // OneToMany
 } from 'typeorm';
 import { Category } from './category.entity';
-import { Comment } from './comment.entity';
+import { CommentPost } from './commentpost.entity';
+// import { Comment } from './comment.entity';
 // import { Category } from './category.entity';
 // import { Comment } from './comment.entity';
 import { User } from './user.entity';
@@ -45,9 +47,6 @@ export class Post extends BaseEntity {
   })
   category: Category;
 
-  @ManyToOne(() => Comment, (comment) => comment.posts, {
-    cascade: true,
-    eager: true
-  })
-  comment: Comment;
+  @ManyToOne(() => CommentPost, (commentPost) => commentPost.post)
+  commentPost: CommentPost;
 }

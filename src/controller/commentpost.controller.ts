@@ -1,16 +1,14 @@
 import { Request, Response } from 'express';
-import toNewPostEntry from 'src/utils/utils';
-import { PostRepository } from '../repository/post.repository';
+import { CommentPostRepository } from '../repository/commentpost.repository';
 
-const postRepository = new PostRepository();
+const commentPostRepository = new CommentPostRepository();
 
-export const createPost = async (
+export const createCommentPost = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    toNewPostEntry(req.body);
-    postRepository
+    commentPostRepository
       .save(req.body)
       .then((post) => {
         res.send(post).status(200);
@@ -22,9 +20,9 @@ export const createPost = async (
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getAllPost = async (req: Request, res: Response) => {
+export const getAllCommentPost = async (req: Request, res: Response) => {
   try {
-    const posts = await postRepository.findAll();
+    const posts = await commentPostRepository.findAll();
     if (posts.length === 0) {
       res.status(204).send('post not found');
     }
@@ -36,8 +34,8 @@ export const getAllPost = async (req: Request, res: Response) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getPost = async (req: Request, res: Response) => {
-  await postRepository
+export const getCommentPost = async (req: Request, res: Response) => {
+  await commentPostRepository
     .findById(req.params.id)
     .then((post) => {
       if (post == null) {
@@ -49,7 +47,21 @@ export const getPost = async (req: Request, res: Response) => {
     .catch((err: string) => res.status(500).json(`Error: ${err}`));
 };
 
-export const updatePost = async (
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const getCommentPostByPostId = async (req: Request, res: Response) => {
+  await commentPostRepository
+    .findByIdPost(req.params.id)
+    .then((post) => {
+      if (post == null) {
+        res.status(204).send('post not found');
+      } else {
+        res.send(post);
+      }
+    })
+    .catch((err: string) => res.status(500).json(`Error: ${err}`));
+};
+
+export const updateCommentPost = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -61,12 +73,12 @@ export const updatePost = async (
   }
 };
 
-export const deletePost = async (
+export const deleteCommentPost = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    postRepository
+    commentPostRepository
       .delete(req.params.id)
       .then((postDelete) => {
         res.status(200).send(postDelete);
