@@ -1,8 +1,9 @@
-import { Category } from 'src/user/entities/category.entity';
-import { Comment } from 'src/user/entities/comment.entity';
-import { Post } from 'src/user/entities/post.entity';
+import { Category } from 'src/entity/category.entity';
+import { Comment } from 'src/entity/comment.entity';
+import { CommentPost } from 'src/entity/commentpost.entity';
+import { Post } from 'src/entity/post.entity';
 import { DataSource } from 'typeorm';
-import { User } from '../user/entities/user.entity';
+import { User } from '../entity/user.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
