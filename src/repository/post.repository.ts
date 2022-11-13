@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable space-before-function-paren */
 import { Category } from 'src/entity/category.entity';
-import { CommentPost } from 'src/entity/commentpost.entity';
-// import { Comment } from 'src/entity/comment.entity';
 import { User } from 'src/entity/user.entity';
 import { Post } from '../entity/post.entity';
 import { BasePostRepository } from './base.post.repository';
 import { CommentPostRepository } from './commentpost.repository';
 import { CommentRepository } from './comment.repository';
 import { Comment } from "../entity/comment.entity";
+import { UpdateResult } from "typeorm";
 
 export class PostRepository implements BasePostRepository {
   async findAll(): Promise<Post[] | []> {
@@ -21,8 +20,17 @@ export class PostRepository implements BasePostRepository {
     });
   }
 
-  async update(newPost: Post): Promise<Post> {
-    return new Post();
+  async update (req: any): Promise<UpdateResult> {
+    const postId = req.params.id;
+    const newPost = req.body;
+    return await Post
+      .createQueryBuilder()
+      .update(Post)
+      .set({ ...newPost })
+      .where('post_id = :postId', {
+        postId
+      })
+      .execute();
   }
 
   deletePostAndComments(id: string): void {
@@ -87,7 +95,7 @@ export class PostRepository implements BasePostRepository {
     objPost.category = objCategory;
     return await Post.save(objPost).catch((err: string) => {
       console.log('error -> ', err);
-      return new Error('gaaaaaaaaaaaaaaa');
+      return new Error('error al guardar post');
     });
 
     const commentPostRepo = new CommentPostRepository();

@@ -2,6 +2,8 @@
 /* eslint-disable space-before-function-paren */
 import { Comment } from 'src/entity/comment.entity';
 import { BaseCommentRepository } from './base.comment.repository';
+import { Post } from "../entity/post.entity";
+import { UpdateResult } from "typeorm";
 
 export class CommentRepository implements BaseCommentRepository {
   async findAll(): Promise<Comment[] | []> {
@@ -14,8 +16,17 @@ export class CommentRepository implements BaseCommentRepository {
     });
   }
 
-  async update(newComment: Comment): Promise<Comment> {
-    return new Comment();
+  async update (req: any): Promise<UpdateResult> {
+    const commentId = req.params.id;
+    const newComment = req.body;
+    return await Comment
+      .createQueryBuilder()
+      .update(Comment)
+      .set({ ...newComment })
+      .where('comment_id = :commentId', {
+        commentId
+      })
+      .execute();
   }
 
   async delete(id: string): Promise<Comment> {
@@ -28,4 +39,13 @@ export class CommentRepository implements BaseCommentRepository {
   async save(newComment: any): Promise<Comment | Error> {
     return await Comment.save(newComment);
   }
+
+  async getCommentsByPostId (id: string): Promise<Comment[] | Error | []> {
+    return await Comment.createQueryBuilder('comment')
+      .leftJoinAndSelect(Post, 'post', 'comment.post = post.post_id')
+      .where('post.post_id = :id ', { id })
+      .getMany();
+  }
+
+
 }

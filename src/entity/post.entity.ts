@@ -10,6 +10,7 @@ import {
 import { Category } from './category.entity';
 import { CommentPost } from './commentpost.entity';
 import { User } from './user.entity';
+import { Comment } from "./comment.entity";
 
 @Entity()
 export class Post extends BaseEntity {
@@ -42,6 +43,12 @@ export class Post extends BaseEntity {
     eager: true
   })
   category: Category;
+
+  @OneToMany(() => Comment, (comment) => comment.post, {
+    cascade: true,
+    eager: true
+  })
+  comment: Comment;
 
   /* @OneToMany(() => CommentPost, (commentPost) => commentPost.post)
   commentPost: CommentPost;*/

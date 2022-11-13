@@ -14,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: 'bloggio',
   synchronize: true,
   logging: true,
-  entities: [User, Post, Comment, Category, CommentPost],
+  entities: [User, Post, Comment, Category],
   subscribers: [],
   migrations: []
 });

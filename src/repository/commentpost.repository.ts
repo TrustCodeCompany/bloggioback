@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable space-before-function-paren */
-import { Category } from 'src/entity/category.entity';
 import { Post } from 'src/entity/post.entity';
-import { User } from 'src/entity/user.entity';
 import { CommentPost } from '../entity/commentpost.entity';
 import { BaseCommentPostRepository } from './base.commentpost.repository';
 import { Comment } from "../entity/comment.entity";
@@ -56,5 +54,9 @@ export class CommentPostRepository implements BaseCommentPostRepository {
       .into('CommentPost')
       .values({ postPostId: postId })
       .execute();*/
+  }
+
+  saveCommentsInPost (newComment: Comment, actualPost: Post): Promise<void> {
+    return Promise.resolve(undefined);
   }
 }

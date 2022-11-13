@@ -5,9 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  OneToMany
-} from 'typeorm';
+  OneToMany, ManyToOne, JoinTable
+} from "typeorm";
 import { CommentPost } from './commentpost.entity';
+import { Post } from "./post.entity";
 @Entity()
 export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -22,7 +23,7 @@ export class Comment extends BaseEntity {
   @Column({ type: 'int', default: 1 })
   category_state: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   comment_id_reply: string;
 
   @CreateDateColumn()
@@ -30,6 +31,10 @@ export class Comment extends BaseEntity {
 
   @UpdateDateColumn()
   comment_timestamp_update: Date;
+
+  @ManyToOne(() => Post, (post) => post.comment)
+  @JoinTable()
+  post: Post[];
 
   /* @OneToMany(() => CommentPost, (commentPost) => commentPost.comment)
   commentPost: CommentPost;*/

@@ -1,34 +1,32 @@
-import { Request, Response } from 'express';
-import { CommentPostRepository } from '../repository/commentpost.repository';
+import { Request, Response } from "express";
 import { CommentRepository } from "../repository/comment.repository";
 
-const commentPostRepository = new CommentPostRepository();
 const commentRepository = new CommentRepository();
 
-export const createCommentPost = async (
+export const createComment = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    commentPostRepository
+    commentRepository
       .save(req.body)
-      .then((post) => {
-        res.send(post).status(200);
+      .then((comment) => {
+        res.send(comment).status(200);
       })
-      .catch((err: string) => res.status(500).send(`Error: ${err}`));
+      .catch((err: string) => res.status(500).send({ message: err }));
   } catch (error) {
     res.status(500).json(JSON.parse(`{"error":"${error.message}"}`));
   }
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getAllCommentPost = async (req: Request, res: Response) => {
+export const getAllComments = async (req: Request, res: Response) => {
   try {
-    const posts = await commentPostRepository.findAll();
-    if (posts.length === 0) {
-      res.status(204).send('post not found');
+    const comments = await commentRepository.findAll();
+    if (comments.length === 0) {
+      res.status(204).send("comments not found");
     }
-    res.send(posts);
+    res.send(comments).status(200);
   } catch (error) {
     if (error instanceof Error)
       res.status(500).send({ message: error.message });
@@ -36,12 +34,12 @@ export const getAllCommentPost = async (req: Request, res: Response) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getCommentPost = async (req: Request, res: Response) => {
-  await commentPostRepository
+export const getCommentById = async (req: Request, res: Response) => {
+  await commentRepository
     .findById(req.params.id)
     .then((post) => {
       if (post == null) {
-        res.status(204).send('post not found');
+        res.status(204).send("post not found");
       } else {
         res.send(post);
       }
@@ -50,12 +48,12 @@ export const getCommentPost = async (req: Request, res: Response) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getCommentPostByPostId = async (req: Request, res: Response) => {
+export const getCommentsByPostId = async (req: Request, res: Response) => {
   await commentRepository
     .getCommentsByPostId(req.params.id)
     .then((post) => {
       if (post == null) {
-        res.status(204).send('post not found');
+        res.status(204).send({ message: "post not found" });
       } else {
         res.send(post);
       }
@@ -63,29 +61,26 @@ export const getCommentPostByPostId = async (req: Request, res: Response) => {
     .catch((err: string) => res.status(500).json(`Error: ${err}`));
 };
 
-export const updateCommentPost = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    res.send('updated');
-  } catch (error) {
-    if (error instanceof Error)
-      res.status(500).send({ message: error.message });
-  }
+export const updateComment = async (req: Request, res: Response) => {
+  await commentRepository
+    .update(req)
+    .then((comment) => {
+      res.send({ message: "update ok" }).status(200);
+    })
+    .catch((err: string) => res.status(500).json(`Error: ${err}`));
 };
 
-export const deleteCommentPost = async (
+export const deleteComment = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    commentPostRepository
+    commentRepository
       .delete(req.params.id)
-      .then((postDelete) => {
-        res.status(200).send(postDelete);
+      .then((comment) => {
+        res.status(200).send({message: 'delete successfully'});
       })
-      .catch((err: string) => res.status(500).json(`Error: ${err}`));
+      .catch((err: string) => res.status(500).json({ message: err }));
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).send({ message: error.message });
