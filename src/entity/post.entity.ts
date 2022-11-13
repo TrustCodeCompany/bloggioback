@@ -3,16 +3,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
   BaseEntity,
-  ManyToOne
-  // OneToMany
+  ManyToOne,
+  OneToMany
 } from 'typeorm';
 import { Category } from './category.entity';
 import { CommentPost } from './commentpost.entity';
-// import { Comment } from './comment.entity';
-// import { Category } from './category.entity';
-// import { Comment } from './comment.entity';
 import { User } from './user.entity';
 
 @Entity()
@@ -20,7 +16,7 @@ export class Post extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   post_id: string;
 
-  @Column()
+  @Column({ default: null, nullable: true })
   post_content: string;
 
   @Column({ type: 'int', default: 1 })
@@ -32,7 +28,7 @@ export class Post extends BaseEntity {
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   post_timestamp_create: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp', default: null, nullable: true })
   post_timestamp_update: Date;
 
   @ManyToOne(() => User, (user) => user.posts, {
@@ -47,6 +43,6 @@ export class Post extends BaseEntity {
   })
   category: Category;
 
-  @ManyToOne(() => CommentPost, (commentPost) => commentPost.post)
-  commentPost: CommentPost;
+  /* @OneToMany(() => CommentPost, (commentPost) => commentPost.post)
+  commentPost: CommentPost;*/
 }

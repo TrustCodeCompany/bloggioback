@@ -7,5 +7,4 @@ export interface newPostEntry {
   post_content: string;
   user_id: string;
   category_id: string;
-  comment_id: string;
 }

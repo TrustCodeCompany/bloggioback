@@ -19,19 +19,11 @@ const parseUser = (userFromRequest: any): string => {
   return userFromRequest;
 };
 
-const parseComment = (commentFromRequest: any): string => {
-  if (!isString(commentFromRequest)) {
-    throw new Error('Incorrect uuid comment');
-  }
-  return commentFromRequest;
-};
-
 const toNewPostEntry = (object: any): newPostEntry => {
   const newPost: newPostEntry = {
     post_content: parseContent(object.post_content),
     user_id: parseUser(object.user_id),
-    category_id: object.cateogry_id,
-    comment_id: parseComment(object.comment_id)
+    category_id: object.cateogry_id
   };
   return newPost;
 };

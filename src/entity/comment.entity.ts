@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ManyToOne
+  OneToMany
 } from 'typeorm';
 import { CommentPost } from './commentpost.entity';
 @Entity()
@@ -31,6 +31,6 @@ export class Comment extends BaseEntity {
   @UpdateDateColumn()
   comment_timestamp_update: Date;
 
-  @ManyToOne(() => CommentPost, (commentPost) => commentPost.comment)
-  commentPost: CommentPost;
+  /* @OneToMany(() => CommentPost, (commentPost) => commentPost.comment)
+  commentPost: CommentPost;*/
 }

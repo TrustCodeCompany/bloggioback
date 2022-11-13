@@ -50,7 +50,7 @@ export const getCommentPost = async (req: Request, res: Response) => {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getCommentPostByPostId = async (req: Request, res: Response) => {
   await commentPostRepository
-    .findByIdPost(req.params.id)
+    .findCommentsByIdPost(req.params.id)
     .then((post) => {
       if (post == null) {
         res.status(204).send('post not found');

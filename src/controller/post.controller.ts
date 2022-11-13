@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
 import toNewPostEntry from 'src/utils/utils';
 import { PostRepository } from '../repository/post.repository';
+// import { CommentPostRepository } from '../repository/commentpost.repository';
+// import { Post } from 'src/entity/post.entity';
 
 const postRepository = new PostRepository();
+// const commentPosRepository = new CommentPostRepository();
 
 export const createPost = async (
   req: Request,
@@ -11,11 +14,9 @@ export const createPost = async (
   try {
     toNewPostEntry(req.body);
     postRepository
-      .save(req.body)
-      .then((post) => {
-        res.send(post).status(200);
-      })
+      .saveWithCommentPost(req.body)
       .catch((err: string) => res.status(500).send(`Error: ${err}`));
+    res.send({ response: 'post create successfully' }).status(200);
   } catch (error) {
     res.status(500).json(JSON.parse(`{"error":"${error.message}"}`));
   }
@@ -66,12 +67,8 @@ export const deletePost = async (
   res: Response
 ): Promise<void> => {
   try {
-    postRepository
-      .delete(req.params.id)
-      .then((postDelete) => {
-        res.status(200).send(postDelete);
-      })
-      .catch((err: string) => res.status(500).json(`Error: ${err}`));
+    postRepository.deletePostAndComments(req.params.id);
+    res.status(200).send({ response: 'ok' });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).send({ message: error.message });

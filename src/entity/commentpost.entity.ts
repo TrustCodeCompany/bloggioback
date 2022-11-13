@@ -3,8 +3,8 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   JoinTable,
-  ManyToOne
-} from 'typeorm';
+  ManyToOne, Column
+} from "typeorm";
 import { Comment } from './comment.entity';
 import { Post } from './post.entity';
 @Entity()
@@ -12,7 +12,13 @@ export class CommentPost extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   commentpost_id: string;
 
-  @ManyToOne(() => Comment, (comment) => comment.commentPost, {
+  @Column({ type : 'uuid', default: null, nullable: true })
+  comment_id: string;
+
+  @Column({ type : 'uuid', default: null, nullable: true })
+  post_id: string;
+
+  /* @ManyToOne(() => Comment, (comment) => comment.commentPost, {
     cascade: true,
     eager: true
   })
@@ -24,5 +30,5 @@ export class CommentPost extends BaseEntity {
     eager: true
   })
   @JoinTable()
-  post: Post[];
+  post: Post[];*/
 }

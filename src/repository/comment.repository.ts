@@ -3,7 +3,7 @@
 import { Comment } from 'src/entity/comment.entity';
 import { BaseCommentRepository } from './base.comment.repository';
 
-export class PostRepository implements BaseCommentRepository {
+export class CommentRepository implements BaseCommentRepository {
   async findAll(): Promise<Comment[] | []> {
     return await Comment.find();
   }

@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable space-before-function-paren */
+import { Category } from 'src/entity/category.entity';
 import { Post } from 'src/entity/post.entity';
+import { User } from 'src/entity/user.entity';
 import { CommentPost } from '../entity/commentpost.entity';
 import { BaseCommentPostRepository } from './base.commentpost.repository';
+import { Comment } from "../entity/comment.entity";
 
 export class CommentPostRepository implements BaseCommentPostRepository {
   async findAll(): Promise<CommentPost[] | []> {
@@ -19,13 +22,11 @@ export class CommentPostRepository implements BaseCommentPostRepository {
     return new CommentPost();
   }
 
-  async findByIdPost(id: string): Promise<CommentPost[] | []> {
-    const post = new Post();
-    post.post_id = id;
-    return await CommentPost.createQueryBuilder('CommentPost')
-      .leftJoinAndSelect('CommentPost.post', 'commentPost')
-      .leftJoinAndSelect('CommentPost.comment', 'comment')
-      .where('commentPost.post_id = :id ', { id })
+  async findCommentsByIdPost(id: string): Promise<Comment[] | []> {
+    return await Comment.createQueryBuilder('Comment')
+      .leftJoinAndSelect(CommentPost, 'commentPost', 'commentPost.comment_id = Comment.comment_id')
+      .leftJoinAndSelect(Post, 'post', 'commentPost.post_id = post.post_id')
+      .where('post.post_id = :id ', { id })
       .getMany();
   }
 
@@ -35,8 +36,25 @@ export class CommentPostRepository implements BaseCommentPostRepository {
     return await CommentPost.remove(postToDelete);
   }
 
+  async deleteAllCommentByIdPost(postId: string): Promise<void> {
+    await CommentPost.createQueryBuilder()
+      .delete()
+      .from('CommentPost')
+      .where('post_id = :postId', { postId })
+      .execute();
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async save(newPost: any): Promise<CommentPost | Error> {
-    return new Error();
+  async save(post: any): Promise<void> {
+    const commentPost = new CommentPost();
+
+    commentPost.post_id = post.post_id;
+
+    await CommentPost.save(commentPost);
+    /* await CommentPost.createQueryBuilder()
+      .insert()
+      .into('CommentPost')
+      .values({ postPostId: postId })
+      .execute();*/
   }
 }
