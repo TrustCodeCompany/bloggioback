@@ -17,8 +17,14 @@ export class Post extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   post_id: string;
 
-  @Column({ default: null, nullable: true })
+  @Column({ type: 'text', default: null, nullable: true })
   post_content: string;
+
+  @Column({ default: null, nullable: true })
+  post_title: string;
+
+  @Column({ default: null, nullable: true })
+  post_description: string;
 
   @Column({ type: 'int', default: 1 })
   post_state: number;

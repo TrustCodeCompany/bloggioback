@@ -21,7 +21,7 @@ export class Comment extends BaseEntity {
   comment_content: string;
 
   @Column({ type: 'int', default: 1 })
-  category_state: number;
+  comment_state: number;
 
   @Column({ type: 'uuid', nullable: true })
   comment_id_reply: string;

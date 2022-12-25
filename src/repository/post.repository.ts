@@ -88,6 +88,8 @@ export class PostRepository implements BasePostRepository {
     objUser.user_id = newPost.user_id;
     objCategory.category_id = newPost.category_id;
 
+    objPost.post_title = newPost.post_title;
+    objPost.post_description = newPost.post_description;
     objPost.post_content = newPost.post_content;
     objPost.post_state = newPost.post_state;
     objPost.post_priority = newPost.post_priority;

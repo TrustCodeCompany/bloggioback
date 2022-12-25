@@ -9,7 +9,7 @@ export const createPost = async (
   res: Response
 ): Promise<void> => {
   try {
-    toNewPostEntry(req.body);
+    //toNewPostEntry(req.body);
     postRepository
       .save(req.body).then((response) => {
       res.send(response).status(200);
